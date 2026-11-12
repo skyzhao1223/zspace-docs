@@ -7,6 +7,7 @@ import starlight from '@astrojs/starlight';
  */
 const base = process.env.DOCS_BASE ?? '/';
 
+
 export default defineConfig({
   site: process.env.DOCS_SITE ?? 'https://skyzhao1223.github.io',
   base,
@@ -50,6 +51,19 @@ export default defineConfig({
         },
       ],
       head: [
+        { tag: 'meta', attrs: { property: 'og:type', content: 'website' } },
+        {
+          tag: 'meta',
+          attrs: { property: 'og:title', content: 'zspace-cli — 极空间 NAS 的命令行与 AI 接口' },
+        },
+        {
+          tag: 'meta',
+          attrs: {
+            property: 'og:description',
+            content: '不填密码、不开 SSH、不配 DDNS。9 个开箱即用的 AI 整理技能。',
+          },
+        },
+        { tag: 'meta', attrs: { name: 'twitter:card', content: 'summary_large_image' } },
         {
           tag: 'meta',
           attrs: {
