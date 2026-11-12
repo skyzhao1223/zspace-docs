@@ -1,0 +1,108 @@
+---
+title: 极空间 NAS 的命令行与 AI 接口
+description: 用命令行或 AI Agent 管理极空间 NAS —— 不填密码、不开 SSH、不配 DDNS。
+template: splash
+hero:
+  title: zspace-cli
+  tagline: 用命令行或 AI Agent 管理你的极空间 NAS。<br/>不填密码、不开 SSH、不配 DDNS。
+  actions:
+    - text: 5 分钟上手
+      link: /quickstart/
+      icon: right-arrow
+    - text: GitHub
+      link: https://github.com/skyzhao1223/zspace-cli
+      icon: external
+      variant: minimal
+---
+
+import { Card, CardGrid, LinkCard } from '@astrojs/starlight/components';
+
+## 这是什么
+
+`zspace-cli` 是一个命令行工具 + **一套给 AI 助手用的技能包**。
+
+它通过你本机**已登录的极空间桌面客户端**直连 NAS —— 不需要密码、不需要开 SSH、
+不需要公网 IP。装完之后，你的 AI 助手（Claude Code / Cursor / Trae…）
+就能读懂并操作你的 NAS。
+
+```bash
+pip install zspace-cli
+zs check          # ✓ 读到桌面客户端登录态
+```
+
+## 30 秒看它能干什么
+
+```bash
+zs ls /sata11/my/data/影视                  # 列目录
+zs find "权力的游戏"                         # 跨目录全文搜索
+zs up ./电影.mkv /sata11/my/data/影视        # 上传（分片，1.4GB 也稳）
+zs up ./电影.mkv /sata11/my/data/影视 --verify   # 上传后回读 MD5 校验
+zs down /sata11/my/data/影视/电影.mkv ./     # 下载
+```
+
+对 AI 助手说一句就行：
+
+> 「帮我把 NAS 里的照片按年份月份整理好，先给我看计划。」
+
+它会**只读扫描 → 出 old→new 计划 → 你确认 → 才动手**。
+
+## 为什么不是又一个网盘客户端
+
+| | 网盘客户端 | zspace-cli |
+|---|---|---|
+| 交互 | 点鼠标 | 命令行 / AI 对话 |
+| 批量操作 | 一个个点 | 一条命令 |
+| 自动化 | 几乎不能 | 脚本 / CI / Agent |
+| 数据 | 经过厂商服务器 | **只在你本机** |
+
+**核心差别：它不替你保管数据，它只给你操作数据的手。**
+
+## 三条设计原则
+
+<CardGrid>
+  <Card title="扫描只读" icon="magnifier">
+    所有整理动作的第一步都是「只看不动」，先出一份报告。
+  </Card>
+  <Card title="确认才动手" icon="check">
+    AI 必须先给你看「旧名字 → 新名字 / 移到哪」的清单，你点头它才执行。
+  </Card>
+  <Card title="删除先隔离" icon="warning">
+    建议删除的文件先挪进隔离文件夹，你看过没问题才真删。
+  </Card>
+</CardGrid>
+
+## 9 个开箱即用的 AI 技能
+
+装完之后，你的 AI 助手会多出这些能力：
+
+| 技能 | 你说 | 它做 |
+|---|---|---|
+| **photo-organizer** | 「照片按拍摄日期归档」 | 找出散图、截图、连拍组、重复副本，出归档计划 |
+| **file-sorter** | 「这目录太乱了按类型分」 | 按扩展名分类 |
+| **download-cleaner** | 「下载目录清理一下」 | 残留包、临时文件分类处理 |
+| **dedup-finder** | 「找出重复文件」 | 内容级去重 |
+| **music-organizer** | 「整理音乐库」 | 补曲目号、去水印 |
+| **work-organizer** | 「工作目录归档」 | 版本号、日期归类 |
+| **backup-auditor** | 「帮我审一下备份」 | 备份完整性审计 |
+| **nas-report** | 「空间都被什么占了」 | 存储报告 + 下一步建议 |
+| **portfolio-organizer** | 「整理项目文件夹」 | 代码项目归档 |
+
+**跨品牌通用**：极空间 / 群晖 / 威联通 / 绿联，走 SMB 挂载都能用。
+
+## 往下读
+
+<CardGrid>
+  <LinkCard title="快速开始" href="/quickstart/" description="5 分钟装好并跑通第一条命令" />
+  <LinkCard title="新手指南" href="/beginner-guide/" description="零代码基础，手把手配好 AI 助手" />
+  <LinkCard title="Skills" href="/skills/" description="9 个技能各自干什么、怎么触发" />
+  <LinkCard title="集成指南" href="/integrations/" description="和 Jellyfin / MoviePilot / 自动化管线怎么配合" />
+  <LinkCard title="定价" href="/pricing/" description="开源免费，商业闭源使用需授权" />
+  <LinkCard title="许可" href="/license/" description="AGPL-3.0 + 商业双许可说明" />
+</CardGrid>
+
+## 它不做什么
+
+- ❌ 不是云盘 —— 数据只在你本机
+- ❌ 不碰你的账号密码 —— 走桌面客户端登录态
+- ❌ 不替你决定删什么 —— 只出计划，你确认
+- ❌ 不开 SSH / 不配 DDNS —— 局域网内直连

@@ -1,0 +1,10 @@
+node_modules/
+dist/
+.astro/
+.DS_Store
+*.log
+.env
+.env.local
+
+# 截图产物（本地检查用）
+docs-screenshots/
