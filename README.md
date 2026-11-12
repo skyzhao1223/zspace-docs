@@ -38,13 +38,26 @@ server {
 }
 ```
 
-### 方式 B：GitHub Pages
+### 方式 B：GitHub Pages（当前采用）
 
-推到 `main` 自动构建（见 `.github/workflows/deploy.yml`）。
+**线上地址：<https://skyzhao1223.github.io/zspace-docs/>**
 
-> ⚠️ 如果用 GitHub Pages **项目站**（`/zspace-docs` 子路径），
-> 需要在构建时设 `DOCS_BASE=/zspace-docs`，**并且把页面里的内部链接
-> 从 `/quickstart/` 改成 `/zspace-docs/quickstart/`**（或改用子域名）。
+一条命令部署：
+
+```bash
+./deploy.sh
+```
+
+原理：构建 → 把 `dist/` 推到 `gh-pages` 分支 → Pages 从该分支发布。
+
+> ⚠️ **为什么不用 GitHub Actions**：本账号 Actions 被计费锁定
+> （`The job was not started because your account is locked due to a billing issue`）。
+> 分支发布不消耗 Actions 分钟，所以这条路是通的。
+> 计费恢复后，可以换回 Actions（模板见 git 历史）。
+
+**子路径部署的关键**：`scripts/prefix-links.mjs` 会在构建后把正文里的
+`/quickstart/` 补成 `/zspace-docs/quickstart/`（Astro 7 默认 Markdown 处理器
+不做这件事，不补就是 404）。
 
 ## 结构
 
